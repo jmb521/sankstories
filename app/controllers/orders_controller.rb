@@ -12,7 +12,12 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    @order = Order.new
+    if @book = Book.find_by(isbn: params[:isbn])
+      
+      @order = @book.orders.build
+    else
+      @order = Order.new
+    end
   end
 
   # GET /orders/1/edit
