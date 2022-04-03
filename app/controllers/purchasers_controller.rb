@@ -10,6 +10,7 @@ class PurchasersController < ApplicationController
   def show
   end
 
+
   # GET /purchasers/new
   def new
     @purchaser = Purchaser.new
