@@ -2,13 +2,13 @@ class AddressesController < ApplicationController
   before_action :set_address, only: %i[ show edit update destroy ]
 
   # GET /addresses or /addresses.json
-  def index
-    @addresses = Address.all
-  end
+  # def index
+  #   @addresses = Address.all
+  # end
 
   # GET /addresses/1 or /addresses/1.json
-  def show
-  end
+  # def show
+  # end
 
   # GET /addresses/new
   def new

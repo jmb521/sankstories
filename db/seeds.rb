@@ -7,4 +7,7 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 
-b = Book.create(type: "Paperback")
+b1 = Book.create(:book_type => "Paperback", isbn:"978-1-7379309-0-7")
+b2 = Book.create(book_type:"EBook", isbn:"978-1-7379309-1-4")
+
+puts "Seeding done"
