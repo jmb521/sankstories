@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
     def square_create_customer(order)
         address = order.addresses.find_by(addr_type: "billing")
-       client.customers.create_customer(
+        result = client.customers.create_customer(
             body: {
               given_name: order.purchaser.first_name,
               family_name: order.purchaser.last_name,
@@ -36,13 +36,16 @@ class ApplicationController < ActionController::Base
               warn error[:detail]
             end
           end
-          binding.irb
+        #   binding.irb
     end
     
-    payments_api = client.payments
+    def payments_api
+
+        payments_api = client.payments
+    end
 
     def create_payment(body:)
-        binding.irb
+        # binding.irb
     end
 
 end
