@@ -12,12 +12,12 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    if @book = Book.find_by(isbn: params[:isbn])
+    @book = Book.find_by(isbn: params[:isbn])
       
-      @order = @book.orders.build
-    else
-      @order = Order.new
-    end
+    @order = @book.orders.build
+    @order.purchaser = Purchaser.new
+    @order.addresses.build(addr_type: "mailing")
+    @order.addresses.build(addr_type: "billing")
   end
 
   # GET /orders/1/edit
@@ -27,16 +27,20 @@ class OrdersController < ApplicationController
   # POST /orders or /orders.json
   def create
     @order = Order.new(order_params)
-
-    respond_to do |format|
-      if @order.save
-        format.html { redirect_to order_url(@order), notice: "Order was successfully created." }
-        format.json { render :show, status: :created, location: @order }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
-      end
+    if @order.save
+      binding.irb
+      square_create_customer(@order)
     end
+
+    # respond_to do |format|
+    #   if @order.save
+    #     format.html { redirect_to order_url(@order), notice: "Order was successfully created." }
+    #     format.json { render :show, status: :created, location: @order }
+    #   else
+    #     format.html { render :new, status: :unprocessable_entity }
+    #     format.json { render json: @order.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # PATCH/PUT /orders/1 or /orders/1.json
@@ -70,6 +74,6 @@ class OrdersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def order_params
-      params.require(:order).permit(:book_id, :purchaser_id, :quantity)
+      params.require(:order).permit(:book_id, :quantity, purchaser_attributes: [:first_name, :last_name, :phone, :email], addresses_attributes: [:addr_type, :address_1, :address_2, :city, :state, :zipcode])
     end
 end

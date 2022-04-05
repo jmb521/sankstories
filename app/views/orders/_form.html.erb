@@ -1,4 +1,11 @@
-<%= form_with(model: order) do |form| %>
+<div class="container col-md-8">
+
+
+<% if @book %>
+  <h3>You are ordering <%= @book.book_type %></h3>
+<% end %>
+<%= simple_form_for(@order) do |form| %>
+  <%= form.hidden_field :book_id%>
   <% if order.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
@@ -8,25 +15,73 @@
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
-    </div>
+    <%# </div> %>
   <% end %>
 
-  <div>
-    <%= form.label :book_id, style: "display: block" %>
-    <%= form.text_field :book_id %>
+  
+
+  <%# <div> %>
+      <%= form.simple_fields_for :purchaser do |p|%>
+        <div class="row">
+          <div class="col">
+            <%= p.input :first_name %>
+          </div>
+          <div class="col">
+            <%= p.input :last_name %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <%= p.input :email %>
+          </div>
+          <div class="col">
+            <%= p.input :phone %>
+          </div>
+        </div>
+      <% end %>
+        <br />
+  <hr>
+  <br />
+      <%= form.simple_fields_for :addresses do |addr1| %>
+      <h3><%= addr1.object.addr_type%> Address:</h3>
+        <div class="row">
+          <div class="col">
+            <%= addr1.hidden_field :addr_type%>
+            <%= addr1.input :address_1 %>
+            <%= addr1.input :address_2 %>
+          </div>
+        </div>
+        <div class="row">
+        <div class="col">
+        <%= addr1.input :city %>
+        </div>
+        <div class="col">
+        <%= addr1.input :state %>
+        </div>
+        <div class="col">
+            <%= addr1.input :zipcode %>
+        </div>
+        </div>
+      <br />
+  <hr>
+  <br />
+      <% end %>
+
+      
+
+  <div class="row">
+    <div class="col-sm-2">
+      <%= form.input :quantity, collection: 1..100, selected: 1 %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <%= form.button :submit, class: "btn btn-primary" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :purchaser_id, style: "display: block" %>
-    <%= form.text_field :purchaser_id %>
-  </div>
-
-  <div>
-    <%= form.label :quantity, style: "display: block" %>
-    <%= form.text_field :quantity %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
+  
 <% end %>
+</div>
+
+
