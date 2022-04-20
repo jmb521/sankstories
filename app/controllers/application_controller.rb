@@ -2,6 +2,12 @@ class ApplicationController < ActionController::Base
     require 'square'
     require 'securerandom'
 
+    
+    def gon_variables
+        gon.appId = ENV["APPLICATION_ID"]
+        gon.locationId = ENV["LOCATION_ID"]
+    end
+    
 
     def client
         client = Square::Client.new(
@@ -12,7 +18,7 @@ class ApplicationController < ActionController::Base
     end
 
     def square_create_customer(order)
-        address = order.addresses.find_by(addr_type: "billing")
+        address = order.addresses.detect {|addr| addr.addr_type == "billing"}
         result = client.customers.create_customer(
             body: {
               given_name: order.purchaser.first_name,
@@ -25,18 +31,8 @@ class ApplicationController < ActionController::Base
             }
           )
 
-          if result.success?
-            customer = result.data.customer
-            puts "New customer created with customer ID #{customer[:id]}"
           
-          elsif result.error?
-            result.errors.each do |error|
-              warn error[:category]
-              warn error[:code]
-              warn error[:detail]
-            end
-          end
-        #   binding.irb
+        
     end
     
     def payments_api
@@ -44,8 +40,6 @@ class ApplicationController < ActionController::Base
         payments_api = client.payments
     end
 
-    def create_payment(body:)
-        # binding.irb
-    end
+    
 
 end

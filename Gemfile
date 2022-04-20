@@ -44,6 +44,7 @@ gem "bootsnap", require: false
 gem 'dotenv-rails'
 gem 'square.rb'
 gem 'simple_form'
+gem 'gon' # for adding env variables to js file
 # Use Sass to process CSS
 # gem "sassc-rails"
 
