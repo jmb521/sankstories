@@ -1,10 +1,11 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @order %>
+<h1>Payment</h1>
+  <h3>You are purchasing <%= @order.quantity%> <%= "copy".pluralize(@order.quantity)%> of <%= @order.book.book_type%></h3>
 
-<div>
-  <%= link_to "Edit this order", edit_order_path(@order) %> |
-  <%= link_to "Back to orders", orders_path %>
-
-  <%= button_to "Destroy this order", @order, method: :delete %>
-</div>
+  
+    <form id="payment-form" data-id=<%= @order.id%>>
+      <div id="card-container"></div>
+      <button id="card-button" type="button">Pay <%= number_to_currency(@order.book.price) %></button>
+    </form>
+    <div id="payment-status-container"></div>
