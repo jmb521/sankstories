@@ -5,13 +5,14 @@
   <h3>You are ordering <%= @book.book_type %></h3>
 <% end %>
 <%= simple_form_for(@order) do |form| %>
+
   <%= form.hidden_field :book_id%>
-  <% if order.errors.any? %>
+  <% if @order.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
 
       <ul>
-        <% order.errors.each do |error| %>
+        <% @order.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
@@ -47,19 +48,19 @@
         <div class="row">
           <div class="col">
             <%= addr1.hidden_field :addr_type%>
-            <%= addr1.input :address_1 %>
-            <%= addr1.input :address_2 %>
+            <%= addr1.input :address_1, class: "address_1"%>
+            <%= addr1.input :address_2, class: "address_2"%>
           </div>
         </div>
         <div class="row">
         <div class="col">
-        <%= addr1.input :city %>
+        <%= addr1.input :city, class: "city" %>
         </div>
         <div class="col">
-        <%= addr1.input :state %>
+        <%= addr1.input :state, class: "state" %>
         </div>
         <div class="col">
-            <%= addr1.input :zipcode %>
+            <%= addr1.input :zipcode, class: "zipcode" %>
         </div>
         </div>
       <br />
@@ -70,16 +71,29 @@
       
 
   <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <%= form.input :quantity, collection: 1..100, selected: 1 %>
     </div>
+
+    <div class="col-sm-3">
+      <%= form.input :shipping_method, collection:["Mail", "UPS Ground", "Express"], selected: "Mail", class: "shipping_option"%>
+    </div>
+    <div class="col-sm-3">
+
+      <%= form.input :shipping_cost, label: "Shipping Cost", placeholder: "0.00" %>
+    </div>
+    <div class="col-sm-3">
+        <%= form.button :button, "Calculate Shipping Cost", class:"calculate-button, btn btn-secondary"  %>
+    </div>
   </div>
+
+  <br />
+  <hr />
   <div class="row">
     <div class="col-sm-6">
       <%= form.button :submit, class: "btn btn-primary" %>
     </div>
   </div>
-
   
 <% end %>
 </div>
