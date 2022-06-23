@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_05_031823) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_17_005518) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -31,6 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_05_031823) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "isbn"
+    t.float "price"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -39,6 +40,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_05_031823) do
     t.string "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status"
+    t.float "shipping_cost"
+    t.string "shipping_method"
     t.index ["book_id"], name: "index_orders_on_book_id"
     t.index ["purchaser_id"], name: "index_orders_on_purchaser_id"
   end
@@ -50,6 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_05_031823) do
     t.string "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "customer_id"
   end
 
   add_foreign_key "orders", "books"
