@@ -45,6 +45,7 @@ gem 'dotenv-rails'
 gem 'square.rb'
 gem 'simple_form'
 gem 'gon' # for adding env variables to js file
+gem 'httparty'
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -73,3 +74,5 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+gem "oauth2", "~> 1.4"
